@@ -1,8 +1,8 @@
 # Primer avance aplicacion Traf
 
-* [Funcionalidad de la aplicación](#Funcionalidad-de-la-aplicación)
-* [Capturas de pantalla](#Capturas-de-pantalla)
-* [Componentes utilizados](#Componentes-utilizados)
+* [Funcionalidad de la aplicación](###Funcionalidad-de-la-aplicación)
+* [Capturas de pantalla](###Capturas-de-pantalla)
+* [Componentes utilizados](###Componentes-utilizados)
 
 
 ### Funcionalidad de la aplicación
