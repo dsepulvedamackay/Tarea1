@@ -27,7 +27,7 @@ class LoginScreen extends React.Component {
     const DURATION = 1000
     Alert.alert(
       'Salir',
-      '¿Seguro de quieres salir?',
+      '¿Seguro que quieres salir?',
       [
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
         {text: 'Si', onPress: () => Vibration.vibrate(DURATION) },
