@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, Alert, ImageBackground, Image, Vibration } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+
+//Usar navegador como pantalla inicial
 
 export default class App extends React.Component {
   render() {
@@ -8,6 +10,7 @@ export default class App extends React.Component {
   }
 }
 
+// Pantalla de Login
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
@@ -15,13 +18,19 @@ class LoginScreen extends React.Component {
     
   };
 
+  constructor(props) {
+    super(props);
+    this.state = { user: ''};
+  } 
+
   exit = () => {
+    const DURATION = 1000
     Alert.alert(
       'Salir',
       '¿Seguro de quieres salir?',
       [
         {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'Si', onPress: () => this.props.navigation.goBack() },
+        {text: 'Si', onPress: () => Vibration.vibrate(DURATION) },
       ],
       { cancelable: false }
     )
@@ -39,23 +48,30 @@ class LoginScreen extends React.Component {
 
           <TextInput
             style={styles.textInput}
-            autoCapitalize="none"
+            onChangeText={user => this.setState({ user })}
+            value={this.state.user}
             placeholder="Usuario"
           />
           <TextInput
             secureTextEntry
             style={styles.textInput}
-            autoCapitalize="none"
             placeholder="Contraseña"
           />
-          <Button title="Entrar" 
-            onPress={() => this.props.navigation.navigate('Home')}>
-          </Button>
 
+          <View style={styles.button1}>
+          <Button title="Entrar" 
+            color='#F06292'
+            style={styles.button}
+            onPress={() => this.props.navigation.navigate('Home', {user: this.state.user})}>
+          </Button>
+          </View>
+
+          <View style={styles.button2}>
           <Button title="Salir" 
             onPress={() => this.exit()}>
           </Button>
 
+          </View>
         </ImageBackground>
 
      
@@ -63,19 +79,25 @@ class LoginScreen extends React.Component {
   }
 }
 
+// Pantalla home 
 
 class HomeScreen extends React.Component {
   static navigationOptions = {
-    title: 'Home',
+    title: 'Hola!',
   };
   
   render() {
+    const { params } = this.props.navigation.state;
+    const user = params ? params.user : null;
     return (
       <View>
+        <Text style={{marginTop: '25%',fontSize: 40, justifyContent: 'center', alignSelf: 'center',}}>{JSON.stringify(user)}</Text>
       </View>
     );
   }
 }
+
+//Manejo de paginas con el navegador
 
 const RootStack = StackNavigator(
   {
@@ -91,27 +113,47 @@ const RootStack = StackNavigator(
   }
 );
 
-
+//Estilos
 
 const styles = StyleSheet.create({
   container: {
     width: undefined,
     height: undefined,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+
   },
   textInput: {
     paddingRight: 10,
     paddingLeft: 10,
     height: '7%',
     width: '70%',
-    marginTop: '5%',
-    backgroundColor: 'white'
+    marginBottom: '5%',
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignSelf: 'center',
   },
   logo: {
+    marginTop: '15%',
     width: '70%',
     height: '30%',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+ 
+  button1: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    height: '12%',
+    width: '70%',
+    marginBottom: '5%',
+  },
+  
+  button2: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    height: '12%',
+    width: '40%',
+    marginTop: '20%',
   },
   
 });
